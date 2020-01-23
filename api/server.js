@@ -1,27 +1,33 @@
 const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
+
+const authRouter = require('../auth/auth-router.js');
+const usersRouter = require('../users/users-router');
+
 const morgan = require("morgan")
-// const projectRouter = require('./projects/project-router.js');
 
 const server = express();
 
-const morgan = require('morgan');
-
-server.use(express.json());
+server.use(helmet());
+server.use(cors());
 server.use(morgan('dev'));
+server.use(express.json());
+
+server.use('/api/auth', authRouter);
+server.use('/api/users', usersRouter);
+
+server.get('/', (req, res, next) => {
+  res.send(`
+  <h2>WebAuth III Challenge</h2>
+  `)
+});
 
 server.use((err, req, res, next) => {
   console.log('Error:', err)
   res.status(500).json({
     message: 'Something went wrong...'
   })
-});
-
-server.get('/', (req, res) => {
-  res.send(`
-  <h2>Node DB Challenge</h2>
-  `)
 });
 
 module.exports = server;

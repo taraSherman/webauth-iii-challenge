@@ -7,7 +7,7 @@ exports.up = async function (knex) {
     users.string('password')
       .notNullable()
     users.string('department')
-      .notNullable
+      .notNullable()
   })
 };
 
