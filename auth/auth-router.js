@@ -52,7 +52,7 @@ router.get('/restricted', restricted(), async (req, res, next) => {
   try {
     res.json({
       message: 'You are authorized.',
-      id: req.id
+      userId: req.userId
     })
   } catch (err) {
     next(err)
